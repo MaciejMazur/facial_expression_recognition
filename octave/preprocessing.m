@@ -29,10 +29,10 @@ else
 			i = i + 1;
 			continue;
 		end;
-		if ( i < 30000 ) 
-			i = i+1;
-			continue;
-		end;
+#		if ( i < 30000 ) 
+#			i = i+1;
+#			continue;
+#		end;
 		
 		[label values type] = strsplit(line,','){1,:};
 		dlabel = str2num(label);
