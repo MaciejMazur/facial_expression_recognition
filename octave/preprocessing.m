@@ -1,4 +1,6 @@
-
+#
+# Performs initial preprocessing. Parses csv representation and creates
+# corresponding matrix. Converts input file to octave matrix file.
 
 # type of image
 train = 1;
@@ -17,6 +19,7 @@ A = zeros(m,d*d+2);
 
 i = 0;
 fid = fopen('../data/fer2013.csv','r');
+percent = '%';
 if ( fid < 0 )
 	printf('Error: could not open file\n')
 else
@@ -50,7 +53,7 @@ else
 			t = private;
 		end;
 		if ( mod(i,100) == 0 )
-			printf('%d %d %d\n',i,dlabel,t);	
+			printf('Image: %d %.2f%s\n',i,100.0*i/m,percent);	
 			fflush(stdout);
 		end;
 		A(i,1) = dlabel;
