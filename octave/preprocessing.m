@@ -29,9 +29,10 @@ else
 			i = i + 1;
 			continue;
 		end;
-#		if ( i > 10 ) 
-#			break;
-#		end;
+		if ( i < 30000 ) 
+			i = i+1;
+			continue;
+		end;
 		
 		[label values type] = strsplit(line,','){1,:};
 		dlabel = str2num(label);
@@ -45,11 +46,11 @@ else
 #		printf('\n');
 		
 		t = 0;
-		if ( type =='Training')
+		if ( strcmp('Training',type))
 			t = train;
-		elseif ( type == 'Public')
+		elseif ( strcmp('PublicTest',type))
 			t = public;
-		elseif ( type == 'Private')
+		elseif ( strcmp('PrivateTest',type))
 			t = private;
 		end;
 		if ( mod(i,100) == 0 )
