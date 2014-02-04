@@ -1,9 +1,11 @@
 
 
-#0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral
+%  0=Angry, 1=Disgust, 2=Fear, 3=Happy, 4=Sad, 5=Surprise, 6=Neutral
 
 
 load('../data/All.mat');
+% Change rage from 0-6 to 1-7
+A(:,1) = A(:,1) .+ 1;
 [m,n] = size(A);
 d1 = 48;
 d2 = 48;
