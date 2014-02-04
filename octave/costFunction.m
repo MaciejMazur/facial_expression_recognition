@@ -1,10 +1,20 @@
 function [Cost grad] = costFunction(params, layers_sizes, X, y, lambda)
+%	Evaluates cost and count gradient using backpropagation algorithm.
+%	params - theta parameters
+%	layers_size array of layers sizes [input_layer, hidden_layer_1, ..., hidden_layer_n, output_layer]
+%	X - data matrix
+%	y - original results
+%	lambda - regularization parameter
 
+
+%	number of thetas
 thetas = size(layers_sizes,2)-1;
 
+%	theta labels
 theta_names = ['1';'2';'3';'4';'5';'6';'7';'8';'9';'10';'11';'12'];
 theta_begin = 1;
 
+%	Unrolling parameters, initialization of Theta matrixes, and Theta gradients
 for i = 1:thetas
 	prev = layers_sizes(i)+1;
 	curr = layers_sizes(i+1);
@@ -19,18 +29,17 @@ endfor;
 
 m = size(X, 1);
          
-
+% 	cost function
 Cost = 0;
 
-
-
+% 	square of parameters
 tc = 0;
 
 for i = 1:thetas
 	tc = tc + sum(sum((Theta.(theta_names(i,:)))(:,2:end).^2));
 endfor;
 
-
+%	forward propagation
 ai = X;
 Zi.(theta_names(1,:)) = [ones(m, 1) ai];
 
@@ -42,7 +51,7 @@ for i = 1:thetas
   ai = sigmoid(zi);
 endfor;
 
-
+%	error evaluation
 d = size(unique(y),1);
 
 [A,p] = max(ai,[],2);
@@ -57,7 +66,7 @@ b = -Y .* log(ai) - (1 - Y) .* log(1-ai);
 
 Cost = (sum(sum(b)) + (tc)*lambda/2)/m;
 
-
+%	back propagation
 
 di = (ai .- Y)';
 for i = thetas:-1:2
