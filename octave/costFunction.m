@@ -20,7 +20,6 @@ for i = 1:thetas
 	curr = layers_sizes(i+1);
 	Theta.(theta_names(i,:)) = reshape(params(theta_begin:theta_begin-1+prev*curr), ...
 					curr, prev);
-
 	Theta_grad.(theta_names(i,:)) = zeros(size(Theta.(theta_names(i,:))));
 
 	theta_begin = theta_begin + curr*prev;
@@ -58,10 +57,11 @@ d = size(unique(y),1);
 
 Y = zeros(m,d);
 
+
+
 for j = 1:m
   Y(j,y(j)) = 1;
 endfor;
-
 b = -Y .* log(ai) - (1 - Y) .* log(1-ai);
 
 Cost = (sum(sum(b)) + (tc)*lambda/2)/m;
