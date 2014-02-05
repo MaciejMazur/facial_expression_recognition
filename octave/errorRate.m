@@ -1,6 +1,6 @@
 function [error] = errorRate(Y, YOriginal)
 
 error = 0;
-error = sum(Y != YOriginal)/size(YOriginal,1);
+error = mean(double(Y != YOriginal)) * 100;
 
 end;
