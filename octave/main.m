@@ -8,7 +8,7 @@ load('../data/All.mat');
 A(:,1) = A(:,1) .+ 1;
 A(:,2:end-1) = normalize(A(:,2:end-1));
 [m,n] = size(A);
-
+A = A(randperm(size(A,1)),:);
 d1 = 48;
 d2 = 48;
 
@@ -42,6 +42,9 @@ layers = [d1*d2 50 50 7];
 %numgrad = numGrad(costFunc, params);
 %diff = norm(numgrad-grad)/norm(numgrad+grad)
 
+t = 22967;
+costFunc = @(p) costFunction(p, layers, trainX(1:t,:), trainY(1:t,:), lambda, labels)
+%layers = [d1*d2 1000 500 250 100 50 7];
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
