@@ -24,9 +24,6 @@ private = A(A(:,end) == 3, 1:end-1);
 privateY = private(:,1);
 privateX = private(:,2:end);
 
-layers = [d1*d2 50 50 7];
-%15 sec - iteration
-%layers = [d1*d2 100 100 100 100 100 7];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % gradient checking
@@ -41,12 +38,16 @@ layers = [d1*d2 50 50 7];
 %costFunc = @(p) costFunction(p, layers, trainX(1:100,:), trainY(1:100,:), lambda, labels)
 %numgrad = numGrad(costFunc, params);
 %diff = norm(numgrad-grad)/norm(numgrad+grad)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% batch training
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 labels = 7;
 delta = 0.1;
 lambda = 0.01;
 iterations = 10;
-
-t = 22900;
+len = 20;
+%t = 22900;
+t=1000;
 %layers = [d1*d2 1000 700 500 250 150 50 7];
 layers = [d1*d2 100 100 100 100 100 7];
 params = initializeParams(layers);
@@ -62,6 +63,7 @@ errorRate(pred, trainY(1:t,:))
 
 pred = predict(nn_params,layers,trainX(t+1:end,:));
 errorRate(pred, trainY(t+1:end,:))
+[sg_params cost] = stochasticGradient(nn_params, layers, trainX(1:t,:), trainY(1:t,:), lambda, labels, delta, iterations,len);
 %layers = [d1*d2 1000 500 250 100 50 7];
 
 
