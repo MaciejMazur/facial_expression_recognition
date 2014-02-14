@@ -50,13 +50,18 @@ t = 22900;
 %layers = [d1*d2 1000 700 500 250 150 50 7];
 layers = [d1*d2 100 100 100 100 100 7];
 params = initializeParams(layers);
-options = optimset('MaxIter', 100);
+options = optimset('MaxIter', 1000);
 
 costF = @(p) costFunction(p, layers, trainX(1:t,:), trainY(1:t,:), lambda, labels)
 [nn_params, cost] = fmincg(costF, params , options);
 pred = predict(nn_params,layers,trainX);
 errorRate(pred, trainY)
 
+pred = predict(nn_params,layers,trainX(1:t,:));
+errorRate(pred, trainY(1:t,:))
+
+pred = predict(nn_params,layers,trainX(t+1:end,:));
+errorRate(pred, trainY(t+1:end,:))
 %layers = [d1*d2 1000 500 250 100 50 7];
 
 
