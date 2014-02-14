@@ -1,4 +1,4 @@
-function [Cost grad] = costFunction(params, layers_sizes, X, y, lambda, labels)
+function [Cost grad] = autoencoderCost(params, layers_sizes, X, lambda)
 %	Evaluates cost and count gradient using backpropagation algorithm.
 %	params - theta parameters
 %	layers_size array of layers sizes [input_layer, hidden_layer_1, ..., hidden_layer_n, output_layer]
@@ -51,24 +51,17 @@ for i = 1:thetas
 endfor;
 
 %	error evaluation
-d = labels;
 
 [A,p] = max(ai,[],2);
 
-Y = zeros(m,d);
 
-
-
-for j = 1:m
-  Y(j,y(j)) = 1;
-endfor;
-b = -Y .* log(ai) - (1 - Y) .* log(1-ai);
+b = abs(X .- ai) ;
 
 Cost = (sum(sum(b)) + (tc)*lambda/2)/m;
 
 %	back propagation
 
-di = (ai .- Y)';
+di = (ai .- X)';
 for i = thetas:-1:2
   Theta_grad.(theta_names(i,:)) = di * Ai.(theta_names(i,:));
   di = Theta.(theta_names(i,:))(:,2:end)' * di .* sigmoidGradient(Zi.(theta_names(i,:)))';
