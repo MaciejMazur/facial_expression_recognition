@@ -41,24 +41,37 @@ layers = [d1*d2 50 50 7];
 %costFunc = @(p) costFunction(p, layers, trainX(1:100,:), trainY(1:100,:), lambda, labels)
 %numgrad = numGrad(costFunc, params);
 %diff = norm(numgrad-grad)/norm(numgrad+grad)
+labels = 7;
+delta = 0.1;
+lambda = 0.01;
+iterations = 10;
 
-t = 22967;
-costFunc = @(p) costFunction(p, layers, trainX(1:t,:), trainY(1:t,:), lambda, labels)
+t = 22900;
+%layers = [d1*d2 1000 700 500 250 150 50 7];
+layers = [d1*d2 100 100 100 100 100 7];
+params = initializeParams(layers);
+options = optimset('MaxIter', 100);
+
+costF = @(p) costFunction(p, layers, trainX(1:t,:), trainY(1:t,:), lambda, labels)
+[nn_params, cost] = fmincg(costF, params , options);
+pred = predict(nn_params,layers,trainX);
+errorRate(pred, trainY)
+
 %layers = [d1*d2 1000 500 250 100 50 7];
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % stochastic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-layers = [d1*d2 100 100 100 100 100 7];
-params = initializeParams(layers);
-labels = 7;
-delta = 0.1;
-lambda = 0;
-iterations = 10;
-[sg_params cost] = stochasticGradient(params, layers, trainX, trainY, lambda, labels, delta, iterations); 
-pred = predict(nn_params,layers,trainX);
-errorRate(pred, trainY)
+%layers = [d1*d2 100 100 100 100 100 7];
+%params = initializeParams(layers);
+%labels = 7;
+%delta = 0.1;
+%lambda = 0;
+%iterations = 10;
+%[sg_params cost] = stochasticGradient(params, layers, trainX, trainY, lambda, labels, delta, iterations); 
+%%pred = predict(nn_params,layers,trainX);
+%errorRate(pred, trainY)
 
 
 %options = optimset('MaxIter', 100);
